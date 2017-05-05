@@ -19,5 +19,7 @@ for (var index in js_files) {
 }
 
 module.exports.sync = function () {
-    db.sequelize.sync();
+    db.sequelize.sync().then(function () {  
+        console.log('数据库更新完成');
+    });
 };

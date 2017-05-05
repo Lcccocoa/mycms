@@ -7,14 +7,18 @@
   },
   "dependencies": {
     "body-parser": "~1.17.1",
+    "bootstrap": "^3.3.7",
     "cookie-parser": "~1.4.3",
     "debug": "~2.6.3",
     "express": "~4.15.2",
+    "express-session": "^1.15.2",
     "hbs": "~4.0.1",
+    "jquery": "^3.2.1",
     "morgan": "~1.8.1",
-    "node-sass-middleware": "0.9.8",
-    "serve-favicon": "~2.4.2",
     "mysql": "2.13.0",
-    "sequelize": "^3.30.4"
+    "node-sass-middleware": "0.9.8",
+    "passport": "^0.3.2",
+    "sequelize": "^3.30.4",
+    "serve-favicon": "~2.4.2"
   }
 }
