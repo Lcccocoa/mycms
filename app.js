@@ -3,9 +3,8 @@ var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
-var session = require('express-session')
+var session = require('express-session');
 var bodyParser = require('body-parser');
-var sassMiddleware = require('node-sass-middleware');
 var hbs = require('hbs');
 
 var api = require('./api/api');
@@ -18,6 +17,14 @@ var app = express();
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 hbs.registerPartials(__dirname + '/views/partials');
+hbs.registerHelper(
+    'section',
+    function(name, options) {
+        if (!this._sections) this._sections = {};
+        this._sections[name] = options.fn(this);
+        return null;
+    }
+);
 app.set('view engine', 'html');
 app.engine('html', hbs.__express);
 
@@ -33,12 +40,16 @@ app.use(session({
     resave: false,
     saveUninitialized: true
 }));
-app.use(sassMiddleware({
-    src: path.join(__dirname, 'public'),
-    dest: path.join(__dirname, 'public'),
-    indentedSyntax: true, // true = .sass and false = .scss
-    sourceMap: true
-}));
+// app.use(function(req, res, next) {
+//     res.locals.user = req.session.user;
+//     var err = req.session.error;
+//     delete req.session.error;
+//     if (err) {
+//         res.locals.message = err;
+//     }
+//     next();
+// });
+
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'node_modules')));
 

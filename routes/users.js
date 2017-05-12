@@ -15,13 +15,11 @@ router.get('/', function(req, res, next) {
 // 登录 
 router.get('/login', function(req, res, next) {
 
-    var name = req.session.name;
     var login = req.session.login;
     res.render('user/login', {
         layout: null,
         title: '用户登录',
-        login: login,
-        name: name,
+        login: JSON.stringify(login),
     });
 }).post('/login', function(req, res, next) {
     var name = req.body.name;
@@ -39,14 +37,20 @@ router.get('/login', function(req, res, next) {
             if (user.password === pwd) {
 
                 console.log('登录成功');
-                req.session.login = true;
-                req.session.name = name;
+                req.session.login = {
+                    status: true,
+                    name: name,
+                    msg: 'ok'
+                };
                 res.redirect('/users');
 
             } else {
                 console.log('登录失败');
-                req.session.login = false;
-                req.session.name = name;
+                req.session.login = {
+                    status: false,
+                    name: name,
+                    msg: '登录失败'
+                };
                 res.redirect('/users/login');
             }
         } else {
